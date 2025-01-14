@@ -38,7 +38,7 @@
                 const totalRespuestas = filas.filter(fila => fila.trim() !== "").length;
 
                 document.getElementById("contador").textContent = 
-                    `Número de respuestas: ${totalRespuestas}`;
+                    `Número de respuestas: ${totalRespuestas-1}`;
             } catch (error) {
                 document.getElementById("contador").textContent = 
                     "Error al cargar el número de respuestas.";
