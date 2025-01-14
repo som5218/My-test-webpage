@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Google Sheets Embed</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin: 0;
+            padding: 0;
+        }
+        iframe {
+            width: 100%;
+            height: 85vh;
+            border: none;
+        }
+        #contador {
+            font-size: 1.2em;
+            margin: 10px 0;
+        }
+    </style>
+</head>
+<body>
+    <h1>Respuestas Formulario Tiendas Itinerantes</h1>
+    <div id="contador">Cargando el número de respuestas...</div>
+    <iframe src="https://docs.google.com/spreadsheets/d/e/2PACX-1vS9oRTW147DqvwfiKUwz7SzZ8B5_P6AVSwTo2cbQIyWzBmSE0tc8FEfD7Rkd6-JMze5xl0SfGHBdHHs/pubhtml?widget=true&amp;headers=false"></iframe>
+
+    <script>
+        async function contarRespuestas() {
+            const url = "https://docs.google.com/spreadsheets/d/e/2PACX-1vS9oRTW147DqvwfiKUwz7SzZ8B5_P6AVSwTo2cbQIyWzBmSE0tc8FEfD7Rkd6-JMze5xl0SfGHBdHHs/pub?output=csv"; // Enlace CSV
+            
+            try {
+                const respuesta = await fetch(url);
+                const texto = await respuesta.text();
+                const filas = texto.split("\n").slice(1); // Divide las filas y elimina la cabecera
+                const totalRespuestas = filas.filter(fila => fila.trim() !== "").length;
+
+                document.getElementById("contador").textContent = 
+                    `Número de respuestas: ${totalRespuestas}`;
+            } catch (error) {
+                document.getElementById("contador").textContent = 
+                    "Error al cargar el número de respuestas.";
+            }
+        }
+
+        contarRespuestas();
+    </script>
+</body>
+</html>
